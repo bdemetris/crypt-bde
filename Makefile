@@ -12,21 +12,10 @@ BRANCH = $(shell git rev-parse --abbrev-ref HEAD)
 REVISION = $(shell git rev-parse HEAD)
 REVSHORT = $(shell git rev-parse --short HEAD)
 USER = $(shell whoami)
-APP_NAME = gosal
+APP_NAME = crypt-bde
 PKGDIR_TMP = ${TMPDIR}golang
 
 ifneq ($(OS), Windows_NT)
-	CURRENT_PLATFORM = linux
-	# If on macOS, set the shell to bash explicitly
-	ifeq ($(shell uname), Darwin)
-		SHELL := /bin/bash
-		CURRENT_PLATFORM = darwin
-	endif
-
-	# To populate version metadata, we use unix tools to get certain data
-	GOVERSION = $(shell go version | awk '{print $$3}')
-	NOW	= $(shell date -u +"%Y-%m-%dT%H:%M:%SZ")
-else
 	CURRENT_PLATFORM = windows
 
 	# To populate version metadata, we use windows tools to get the certain data
@@ -36,13 +25,13 @@ else
 endif
 
 BUILD_VERSION = "\
-	-X github.com/airbnb/gosal/version.appName=${APP_NAME} \
-	-X github.com/airbnb/gosal/version.version=${VERSION} \
-	-X github.com/airbnb/gosal/version.branch=${BRANCH} \
-	-X github.com/airbnb/gosal/version.buildUser=${USER} \
-	-X github.com/airbnb/gosal/version.buildDate=${NOW} \
-	-X github.com/airbnb/gosal/version.revision=${REVISION} \
-	-X github.com/airbnb/gosal/version.goVersion=${GOVERSION}"
+	-X github.com/bdemetris/crypt-bde/version.appName=${APP_NAME} \
+	-X github.com/bdemetris/crypt-bde/version.version=${VERSION} \
+	-X github.com/bdemetris/crypt-bde/version.branch=${BRANCH} \
+	-X github.com/bdemetris/crypt-bde/version.buildUser=${USER} \
+	-X github.com/bdemetris/crypt-bde/version.buildDate=${NOW} \
+	-X github.com/bdemetris/crypt-bde/version.revision=${REVISION} \
+	-X github.com/bdemetris/crypt-bde/version.goVersion=${GOVERSION}"
 
 define HELP_TEXT
 
@@ -74,15 +63,11 @@ clean:
 	rm -rf ${PKGDIR_TMP}_windows
 
 .pre-build:
-	mkdir -p build/darwin
-	mkdir -p build/linux
 	mkdir -p build/windows
 
 
 build: .pre-build
-	# GOOS=darwin go build -i -o build/darwin/${APP_NAME} -pkgdir ${PKGDIR_TMP}_darwin -ldflags ${BUILD_VERSION} ./cmd/gosal
-	# GOOS=linux go build -i -o build/linux/${APP_NAME} -pkgdir ${PKGDIR_TMP}_linux -ldflags ${BUILD_VERSION} ./cmd/gosal
-	GOOS=windows go build -i -o build/windows/${APP_NAME}.exe -pkgdir ${PKGDIR_TMP}_windows -ldflags ${BUILD_VERSION} ./cmd/gosal
+	GOOS=windows go build -i -o build/windows/${APP_NAME}.exe -pkgdir ${PKGDIR_TMP}_windows -ldflags ${BUILD_VERSION} ./cmd/cryptbde
 
 
 test:

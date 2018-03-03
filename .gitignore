@@ -1,0 +1,5 @@
+*.DS_Store
+cryptbde.exe
+!cmd/cryptbde
+build/
+vendor/
