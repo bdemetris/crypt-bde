@@ -21,6 +21,9 @@ func BuildCheckin(conf *config.Config) (*Checkin, error) {
 		return nil, errors.Wrap(err, "get win32ComputerSystem")
 	}
 
+	test := RotateKey()
+	fmt.Println(test)
+
 	// Sending this in place of the recovery key for now
 	u1 := uuid.Must(uuid.NewV4()).String()
 

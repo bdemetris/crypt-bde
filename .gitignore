@@ -3,3 +3,4 @@ cryptbde.exe
 !cmd/cryptbde
 build/
 vendor/
+golang_windows/
