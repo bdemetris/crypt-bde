@@ -1,4 +1,4 @@
-package bde
+package reports
 
 import (
 	"encoding/json"

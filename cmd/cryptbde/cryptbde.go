@@ -4,12 +4,11 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/bdemetris/crypt-bde/bde"
-
 	"github.com/pkg/errors"
 	"github.com/spf13/cobra"
 
 	"github.com/bdemetris/crypt-bde/config"
+	"github.com/bdemetris/crypt-bde/reports"
 	"github.com/bdemetris/crypt-bde/version"
 )
 
@@ -45,7 +44,7 @@ Complete documentation is available at https://github.com/bdemetris/crypt-bde/.`
 			if !conf.Loaded() {
 				fatal(errors.New("config file not loaded. Must specify --config flag"))
 			}
-			if _, err := bde.BuildCheckin(conf); err != nil {
+			if _, err := reports.BuildCheckin(conf); err != nil {
 				fatal(err)
 			}
 			// if err := crypt.SendCheckin(conf); err != nil {
