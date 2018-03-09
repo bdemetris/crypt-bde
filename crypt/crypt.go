@@ -12,6 +12,7 @@ import (
 	"time"
 
 	"github.com/bdemetris/crypt-bde/config"
+	"github.com/bdemetris/crypt-bde/reports"
 	"github.com/pkg/errors"
 )
 
@@ -82,7 +83,7 @@ func SendCheckin(conf *config.Config) error {
 	}
 
 	// Execute a checkin, providing the data to send to the checkin endpoint
-	report, err := reports.BuildReport(conf)
+	report, err := reports.BuildCheckin(conf)
 	if err != nil {
 		return errors.Wrap(err, "build report")
 	}
