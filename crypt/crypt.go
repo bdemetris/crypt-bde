@@ -1,5 +1,5 @@
-// Package sal is a client for the Sal server API.
-package sal
+// Package crypt is a client for the Crypt server API.
+package crypt
 
 import (
 	"fmt"
