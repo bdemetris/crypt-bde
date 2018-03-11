@@ -89,10 +89,11 @@ func SendCheckin(conf *config.Config) error {
 	}
 
 	err = client.Checkin(url.Values{
-		"serial":       {report.Serial},
-		"recovery_key": {report.RecoveryKey},
-		"username":     {report.UserName},
-		"macname":      {report.MacName},
+		"serial":            {report.Serial},
+		"recovery_password": {report.RecoveryPass},
+		"username":          {report.UserName},
+		"macname":           {report.MacName},
+		"recovery_type":     {report.RecoveryType},
 	})
 	return errors.Wrap(err, "checkin")
 }

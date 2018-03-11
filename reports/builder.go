@@ -28,10 +28,11 @@ func BuildCheckin(conf *config.Config) (*Checkin, error) {
 	}
 
 	checkin := &Checkin{
-		Serial:      win32Bios.SerialNumber,
-		RecoveryKey: key,
-		UserName:    win32ComputerSystem.UserName,
-		MacName:     win32Bios.PSComputerName,
+		Serial:       win32Bios.SerialNumber,
+		RecoveryPass: key,
+		UserName:     win32ComputerSystem.UserName,
+		MacName:      win32Bios.PSComputerName,
+		RecoveryType: "bitlocker",
 	}
 
 	fmt.Printf("%+v\n", checkin)
@@ -41,8 +42,9 @@ func BuildCheckin(conf *config.Config) (*Checkin, error) {
 
 // Checkin is what Crypt-Server expects us to POST
 type Checkin struct {
-	Serial      string
-	RecoveryKey string
-	UserName    string
-	MacName     string
+	Serial       string
+	RecoveryPass string
+	UserName     string
+	MacName      string
+	RecoveryType string
 }
