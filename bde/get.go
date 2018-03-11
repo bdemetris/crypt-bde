@@ -8,6 +8,8 @@ import (
 	"github.com/pkg/errors"
 )
 
+// TODO this is not a good way to get the status since the drive might be encrypting
+// better would be to check to see if there are any keyprotectors
 // GetBitlockerStatus returns a bool of bitlocker encryption status
 func GetBitlockerStatus() (bool, error) {
 	cmd := exec.Command("powershell", "Get-BitlockerVolume", "-MountPoint", "$env:SystemDrive", "|", "ConvertTo-Json")
