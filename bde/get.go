@@ -8,6 +8,34 @@ import (
 	"github.com/pkg/errors"
 )
 
+// GetBitlockerStatus returns a bool of bitlocker encryption status
+func GetBitlockerStatus() (bool, error) {
+	cmd := exec.Command("powershell", "Get-BitlockerVolume", "-MountPoint", "$env:SystemDrive", "|", "ConvertTo-Json")
+
+	// cmd.Stderr = os.Stderr
+	o, err := cmd.Output()
+	if err != nil {
+		return false, errors.Wrap(err, "exec Get-BitlockerVolume status")
+	}
+
+	var s bitlockerStatus
+
+	if err := json.Unmarshal(o, &s); err != nil {
+		return false, errors.Wrap(err, "failed unmarshalling Key Protectors")
+	}
+
+	if s.VolumeStatus == 1 {
+		return true, nil
+	}
+
+	return false, nil
+}
+
+// structure for bitlocker status output
+type bitlockerStatus struct {
+	VolumeStatus int `json:"VolumeStatus"`
+}
+
 // GetActiveKeyProtector returns the primary activation key (not the TPM)
 func GetActiveKeyProtector() (string, error) {
 	keys, err := GetKeyProtectors()

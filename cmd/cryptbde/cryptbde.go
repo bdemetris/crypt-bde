@@ -100,6 +100,7 @@ func main() {
 
 	// add additional commands to root
 	rootCmd.AddCommand(createVersionCmd())
+	rootCmd.AddCommand(createRotateKeyCmd())
 
 	// run the root command.
 	if err := rootCmd.Execute(); err != nil {
