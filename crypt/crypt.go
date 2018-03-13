@@ -88,8 +88,6 @@ func SendCheckin(conf *config.Config) error {
 		return errors.Wrap(err, "build report")
 	}
 
-	fmt.Println(report)
-
 	err = client.Checkin(url.Values{
 		"serial":            {report.Serial},
 		"recovery_password": {report.RecoveryPass},

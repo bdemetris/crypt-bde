@@ -1,8 +1,6 @@
 package reports
 
 import (
-	"fmt"
-
 	"github.com/bdemetris/crypt-bde/bde"
 
 	"github.com/bdemetris/crypt-bde/config"
@@ -35,7 +33,7 @@ func BuildCheckin(conf *config.Config) (*Checkin, error) {
 		RecoveryType: "bitlocker",
 	}
 
-	fmt.Printf("%+v\n", checkin)
+	// fmt.Printf("%+v\n", checkin)
 
 	return checkin, nil
 }

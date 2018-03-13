@@ -14,13 +14,21 @@ import (
 	"github.com/bdemetris/crypt-bde/version"
 )
 
-func createRotateKeyCmd() *cobra.Command {
+func createRotateKeyCmd(conf *config.Config) *cobra.Command {
 	var rotateKeyCmd = &cobra.Command{
 		Use:   "rotatekey",
 		Short: "create a new bitlocker key",
 		Long:  `create a new bitlocker key. if a key is already present, replace it`,
 		Run: func(cmd *cobra.Command, args []string) {
-			bde.RotateKey()
+			if !conf.Loaded() {
+				fatal(errors.New("config file not loaded. Must specify --config flag"))
+			}
+			if err := bde.RotateKey(); err != nil {
+				fatal(err)
+			}
+			if err := crypt.SendCheckin(conf); err != nil {
+				fatal(err)
+			}
 		},
 	}
 
@@ -100,7 +108,7 @@ func main() {
 
 	// add additional commands to root
 	rootCmd.AddCommand(createVersionCmd())
-	rootCmd.AddCommand(createRotateKeyCmd())
+	rootCmd.AddCommand(createRotateKeyCmd(conf))
 
 	// run the root command.
 	if err := rootCmd.Execute(); err != nil {
