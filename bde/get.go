@@ -2,41 +2,10 @@ package bde
 
 import (
 	"encoding/json"
-	"fmt"
 	"os/exec"
 
 	"github.com/pkg/errors"
 )
-
-// TODO this is not a good way to get the status since the drive might be encrypting
-// better would be to check to see if there are any keyprotectors
-// GetBitlockerStatus returns a bool of bitlocker encryption status
-func GetBitlockerStatus() (bool, error) {
-	cmd := exec.Command("powershell", "Get-BitlockerVolume", "-MountPoint", "$env:SystemDrive", "|", "ConvertTo-Json")
-
-	// cmd.Stderr = os.Stderr
-	o, err := cmd.Output()
-	if err != nil {
-		return false, errors.Wrap(err, "exec Get-BitlockerVolume status")
-	}
-
-	var s bitlockerStatus
-
-	if err := json.Unmarshal(o, &s); err != nil {
-		return false, errors.Wrap(err, "failed unmarshalling Key Protectors")
-	}
-
-	if s.VolumeStatus == 1 {
-		return true, nil
-	}
-
-	return false, nil
-}
-
-// structure for bitlocker status output
-type bitlockerStatus struct {
-	VolumeStatus int `json:"VolumeStatus"`
-}
 
 // GetActiveKeyProtector returns the primary activation key (not the TPM)
 func GetActiveKeyProtector() (string, error) {
@@ -74,9 +43,26 @@ func GetKeyProtectors() ([]KeyProtectors, error) {
 		return nil, errors.Wrap(err, "failed unmarshalling Key Protectors")
 	}
 
-	fmt.Println(kp)
-
 	return kp, nil
+}
+
+// GetEncryptionStatus does some checks to see whats going on with the disk
+func GetEncryptionStatus() (EncryptionStatus, error) {
+	cmd := exec.Command("powershell", "Get-BitlockerVolume", "-MountPoint", "$env:SystemDrive", "|", "ConvertTo-Json")
+
+	// cmd.Stderr = os.Stderr
+	o, err := cmd.Output()
+	if err != nil {
+		return EncryptionStatus{}, errors.Wrap(err, "get status: exec Get-BitlockerVolume")
+	}
+
+	var es EncryptionStatus
+
+	if err := json.Unmarshal(o, &es); err != nil {
+		return EncryptionStatus{}, errors.Wrap(err, "failed unmarshalling Encryption Status")
+	}
+
+	return es, nil
 }
 
 // KeyProtectors represent each item that can unlock the disk
@@ -84,4 +70,11 @@ type KeyProtectors struct {
 	KeyProtectorID   string `json:"KeyProtectorId"`
 	KeyProtectorType int    `json:"KeyProtectorType"`
 	RecoveryPassword string `json:"RecoveryPassword"`
+}
+
+// EncryptionStatus returns the disk encryption status
+type EncryptionStatus struct {
+	MountPoint       string `json:"MountPoint"`
+	EncryptionMethod int    `json:"EncryptionMethod"`
+	KeyProtector     []KeyProtectors
 }
