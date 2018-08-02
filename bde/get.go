@@ -9,10 +9,12 @@ import (
 
 // GetActiveKeyProtector returns the primary activation key (not the TPM)
 func GetActiveKeyProtector() (string, error) {
-	keys, err := GetKeyProtectors()
+	status, err := GetEncryptionStatus()
 	if err != nil {
-		return "", errors.Wrap(err, "getting active key protector")
+		return "", errors.Wrap(err, "get active: getting encryption status")
 	}
+
+	keys := status.KeyProtector
 
 	var kp []string
 
@@ -27,30 +29,10 @@ func GetActiveKeyProtector() (string, error) {
 	return ak, nil
 }
 
-// GetKeyProtectors Lists All Active Key Protectors on the System Drive
-func GetKeyProtectors() ([]KeyProtectors, error) {
-	cmd := exec.Command("powershell", "(Get-BitlockerVolume -MountPoint $env:SystemDrive).KeyProtector", "|", "ConvertTo-Json")
-
-	// cmd.Stderr = os.Stderr
-	o, err := cmd.Output()
-	if err != nil {
-		return nil, errors.Wrap(err, "exec Get-BitlockerVolume")
-	}
-
-	var kp []KeyProtectors
-
-	if err := json.Unmarshal(o, &kp); err != nil {
-		return nil, errors.Wrap(err, "failed unmarshalling Key Protectors")
-	}
-
-	return kp, nil
-}
-
 // GetEncryptionStatus does some checks to see whats going on with the disk
 func GetEncryptionStatus() (EncryptionStatus, error) {
 	cmd := exec.Command("powershell", "Get-BitlockerVolume", "-MountPoint", "$env:SystemDrive", "|", "ConvertTo-Json")
 
-	// cmd.Stderr = os.Stderr
 	o, err := cmd.Output()
 	if err != nil {
 		return EncryptionStatus{}, errors.Wrap(err, "get status: exec Get-BitlockerVolume")
@@ -65,7 +47,7 @@ func GetEncryptionStatus() (EncryptionStatus, error) {
 	return es, nil
 }
 
-// KeyProtectors represent each item that can unlock the disk
+// KeyProtectors represents each item that can unlock the disk
 type KeyProtectors struct {
 	KeyProtectorID   string `json:"KeyProtectorId"`
 	KeyProtectorType int    `json:"KeyProtectorType"`

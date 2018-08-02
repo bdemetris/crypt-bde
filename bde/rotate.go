@@ -24,16 +24,11 @@ func RotateKey() error {
 		return nil
 	}
 
-	keys, err := GetKeyProtectors()
-	if err != nil {
-		return errors.Wrap(err, "rotate: getting active key protector")
-	}
-
 	fmt.Println("active keys found, rotating")
 	var a []string
 
 	//KeyProtector with Type 3 is RecoveryPassword
-	for _, element := range keys {
+	for _, element := range status.KeyProtector {
 		if element.KeyProtectorType == 3 {
 			a = append(a, element.KeyProtectorID)
 		}
