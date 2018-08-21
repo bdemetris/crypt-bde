@@ -7,8 +7,8 @@ import (
 	"github.com/pkg/errors"
 )
 
-// GetActiveKeyProtector returns the primary activation key (not the TPM)
-func GetActiveKeyProtector() (string, error) {
+// GetActiveRecoveryPassword returns the primary recovery password
+func GetActiveRecoveryPassword() (string, error) {
 	status, err := GetEncryptionStatus()
 	if err != nil {
 		return "", errors.Wrap(err, "get active: getting encryption status")
@@ -22,6 +22,10 @@ func GetActiveKeyProtector() (string, error) {
 		if key.KeyProtectorType == 3 {
 			kp = append(kp, key.RecoveryPassword)
 		}
+	}
+
+	if len(kp) == 0 {
+		return "", errors.Wrap(err, "No Active Recovery Passwords Found")
 	}
 
 	ak := kp[0]

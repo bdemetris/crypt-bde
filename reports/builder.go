@@ -20,9 +20,13 @@ func BuildCheckin(conf *config.Config) (*Checkin, error) {
 		return nil, errors.Wrap(err, "get win32ComputerSystem")
 	}
 
-	key, err := bde.GetActiveKeyProtector()
+	key, err := bde.GetActiveRecoveryPassword()
 	if err != nil {
 		return nil, errors.Wrap(err, "get active key protector")
+	}
+
+	if key == "" {
+		key = "No Recovery Passwords on Disk"
 	}
 
 	checkin := &Checkin{
