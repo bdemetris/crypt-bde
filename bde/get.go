@@ -20,7 +20,7 @@ func GetActiveKeyProtector() (string, error) {
 
 	for _, key := range keys {
 		if key.KeyProtectorType == 3 {
-			kp = append(kp, key.KeyProtectorID)
+			kp = append(kp, key.RecoveryPassword)
 		}
 	}
 
