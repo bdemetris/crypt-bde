@@ -75,10 +75,8 @@ clean:
 .pre-build:
 	mkdir -p build/windows
 
-
 build: .pre-build
 	GOOS=windows go build -i -o build/windows/${APP_NAME}.exe -pkgdir ${PKGDIR_TMP}_windows -ldflags ${BUILD_VERSION} ./cmd/cryptbde
-
 
 test:
 	go test -cover -race -v $(shell go list ./... | grep -v /vendor/)

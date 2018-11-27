@@ -5,13 +5,11 @@ import (
 	"os"
 
 	"github.com/bdemetris/crypt-bde/bde"
+	"github.com/bdemetris/crypt-bde/config"
 	"github.com/bdemetris/crypt-bde/crypt"
-
+	"github.com/bdemetris/crypt-bde/version"
 	"github.com/pkg/errors"
 	"github.com/spf13/cobra"
-
-	"github.com/bdemetris/crypt-bde/config"
-	"github.com/bdemetris/crypt-bde/version"
 )
 
 func createRotateKeyCmd(conf *config.Config) *cobra.Command {
