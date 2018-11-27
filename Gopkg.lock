@@ -2,38 +2,62 @@
 
 
 [[projects]]
+  branch = "master"
+  digest = "1:100b0cfb179ea0a2ae8b8b139c039ad8db5897051a09cde729a4f5277d9f18b7"
+  name = "github.com/bdemetris/crypt-bde"
+  packages = [
+    "bde",
+    "config",
+    "crypt",
+    "reports",
+    "version",
+  ]
+  pruneopts = "UT"
+  revision = "264b6e013b1ff80b3699a66be6e9145f1921dd8e"
+
+[[projects]]
+  digest = "1:870d441fe217b8e689d7949fef6e43efbc787e50f200cb1e70dbca9204a1d6be"
   name = "github.com/inconshreveable/mousetrap"
   packages = ["."]
+  pruneopts = "UT"
   revision = "76626ae9c91c4f2a10f34cad8ce83ea42c93bb75"
   version = "v1.0"
 
 [[projects]]
+  digest = "1:40e195917a951a8bf867cd05de2a46aaf1806c50cf92eebf4c16f78cd196f747"
   name = "github.com/pkg/errors"
   packages = ["."]
+  pruneopts = "UT"
   revision = "645ef00459ed84a119197bfb8d8205042c6df63d"
   version = "v0.8.0"
 
 [[projects]]
-  name = "github.com/satori/go.uuid"
-  packages = ["."]
-  revision = "f58768cc1a7a7e77a3bd49e98cdd21419399b6a3"
-  version = "v1.2.0"
-
-[[projects]]
+  digest = "1:7ffc0983035bc7e297da3688d9fe19d60a420e9c38bef23f845c53788ed6a05e"
   name = "github.com/spf13/cobra"
   packages = ["."]
+  pruneopts = "UT"
   revision = "7b2c5ac9fc04fc5efafb60700713d4fa609b777b"
   version = "v0.0.1"
 
 [[projects]]
+  digest = "1:1b21a2b4058a779f290c7341cd93267492e0ecea6c8b54f64a4a5fd7ff131034"
   name = "github.com/spf13/pflag"
   packages = ["."]
+  pruneopts = "UT"
   revision = "e57e3eeb33f795204c1ca35f56c44f83227c6e66"
   version = "v1.0.0"
 
 [solve-meta]
   analyzer-name = "dep"
   analyzer-version = 1
-  inputs-digest = "82441919660d53d8da4604f90ee345a6524721398e4104dbe09515395fa725c0"
+  input-imports = [
+    "github.com/bdemetris/crypt-bde/bde",
+    "github.com/bdemetris/crypt-bde/config",
+    "github.com/bdemetris/crypt-bde/crypt",
+    "github.com/bdemetris/crypt-bde/reports",
+    "github.com/bdemetris/crypt-bde/version",
+    "github.com/pkg/errors",
+    "github.com/spf13/cobra",
+  ]
   solver-name = "gps-cdcl"
   solver-version = 1

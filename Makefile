@@ -16,6 +16,16 @@ APP_NAME = crypt-bde
 PKGDIR_TMP = ${TMPDIR}golang
 
 ifneq ($(OS), Windows_NT)
+	CURRENT_PLATFORM = linux
+	# If on macOS, set the shell to bash explicitly
+	ifeq ($(shell uname), Darwin)
+		SHELL := /bin/bash
+		CURRENT_PLATFORM = darwin
+	endif
+ 	# To populate version metadata, we use unix tools to get certain data
+	GOVERSION = $(shell go version | awk '{print $$3}')
+	NOW	= $(shell date -u +"%Y-%m-%dT%H:%M:%SZ")
+else
 	CURRENT_PLATFORM = windows
 
 	# To populate version metadata, we use windows tools to get the certain data
@@ -65,10 +75,8 @@ clean:
 .pre-build:
 	mkdir -p build/windows
 
-
 build: .pre-build
 	GOOS=windows go build -i -o build/windows/${APP_NAME}.exe -pkgdir ${PKGDIR_TMP}_windows -ldflags ${BUILD_VERSION} ./cmd/cryptbde
-
 
 test:
 	go test -cover -race -v $(shell go list ./... | grep -v /vendor/)
