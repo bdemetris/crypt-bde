@@ -42,23 +42,44 @@ $ sudo defaults write /Library/Preferences/com.grahamgilbert.crypt RemovePlist -
 
 Crypt2 can rotate the recovery key, if the key is used to unlock the disk. There is a small caveat that this feature only works if the key is still present on the disk. This is set to `TRUE` by default.
 
-``` bash
-$ sudo defaults write /Library/Preferences/com.grahamgilbert.crypt RotateUsedKey -bool FALSE
-```
+
 
 ## Building cryptbde
+
+### Downloading the source.
 
 ```golang
 go get github.com/bdemetris/crypt-bde
 ```
 
+### Install dependent programs and libraries.
+
 ```shell
 make deps
 ```
 
+### Delete all build artifacts.
+
 ```shell
-make build
+make clean
 ```
 
+### Build the code.
+
+```shell
+make build        - Build the code
+```
+
+### Run the Go tests.
+
+```shell
+make test
+```
+
+### Run the Go linters.
+
+```shell
+make lint
+```
 
 ### Dont read too much into this.  Just having fun.
