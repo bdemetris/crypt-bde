@@ -53,6 +53,24 @@ func createVersionCmd() *cobra.Command {
 	return versionCmd
 }
 
+func createCheckinCmd(conf *config.Config) *cobra.Command {
+
+	var checkinCmd = &cobra.Command{
+		Use:   "checkin",
+		Short: "Checkin to the crypt-server",
+		Long: `Checkin to the crypt-server Example:	crypt-bde.exe --config=config.json rotatekey`,
+		Run: func(cmd *cobra.Command, args []string) {
+			if !conf.Loaded() {
+				fatal(errors.New("config file not loaded. Must specify --config flag"))
+			}
+			if err := crypt.SendCheckin(conf); err != nil {
+				fatal(err)
+			}
+		},
+	}
+	return checkinCmd
+}
+
 func createRootCmd(conf *config.Config) *cobra.Command {
 	// rootCmd represents the base command when called without any subcommands
 	var rootCmd = &cobra.Command{
