@@ -1,5 +1,5 @@
 # Crypt-BDE
-[![Travis Build](https://travis-ci.org/improbable-eng/kedge.svg?branch=master)](https://travis-ci.org/gavinElder/crypt-bde)
+[![Build Status](https://travis-ci.org/GavinElder/crypt-bde.svg?branch=master)](https://travis-ci.org/GavinElder/crypt-bde)
 [![Go Report Card](https://goreportcard.com/badge/github.com/bdemetris/crypt-bde)](https://goreportcard.com/report/github.com/bdemetris/crypt-bde)
 
 **WARNING:** As this has the potential for stopping users from logging in, extensive testing should take place before deploying into production.
