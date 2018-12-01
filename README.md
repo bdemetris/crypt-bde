@@ -36,10 +36,16 @@ The configuration is defined in the config.json example is contained in the root
 
 ## Running
 
-Rotate keys
+Rotate keys - By default the rotate key command will rotate and then escrow the keys.
 
 ```shell
 crypt-bde.exe --config=config.json rotatekey
+```
+
+Checkin - The checkin command will  escrow the current key without rotation, this will not enable bitlocker.
+
+```shell
+crypt-bde.exe --config=config.json checkin
 ```
 
 ### Dont read too much into this.  Just having fun.
