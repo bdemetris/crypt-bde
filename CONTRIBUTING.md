@@ -28,7 +28,7 @@ make
 ```
 username=$GitHubUsername
 # add your remote/upstream
-git remote add $username git@github.com:$username/micromdm.git
+git remote add $username git@github.com:$username/crypt-bde.git
 
 # update from origin/master
 git pull --rebase
