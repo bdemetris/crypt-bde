@@ -6,6 +6,8 @@ ifndef ($(GOPATH))
 	GOPATH = $(HOME)/go
 endif
 
+export GO111MODULE=on
+
 PATH := $(GOPATH)/bin:$(PATH)
 VERSION = $(shell git describe --tags --always --dirty)
 BRANCH = $(shell git rev-parse --abbrev-ref HEAD)
