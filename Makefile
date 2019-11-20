@@ -6,6 +6,8 @@ ifndef ($(GOPATH))
 	GOPATH = $(HOME)/go
 endif
 
+export GO111MODULE=on
+
 PATH := $(GOPATH)/bin:$(PATH)
 VERSION = $(shell git describe --tags --always --dirty)
 BRANCH = $(shell git rev-parse --abbrev-ref HEAD)
@@ -60,10 +62,12 @@ endef
 help:
 	$(info $(HELP_TEXT))
 
-deps:
-	go get -u github.com/golang/dep/...
-	go get -u github.com/golang/lint/golint
-	dep ensure -vendor-only -v
+gomodcheck:
+	@go help mod > /dev/null || (@echo micromdm requires Go version 1.11 or higher && exit 1)
+
+deps: gomodcheck
+	@go mod download
+
 
 clean:
 	rm -rf build/

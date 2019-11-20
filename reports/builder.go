@@ -7,9 +7,8 @@ import (
 	"github.com/pkg/errors"
 )
 
-//BuildCheckin builds the checkin object
+// BuildCheckin builds the checkin object
 func BuildCheckin(conf *config.Config) (*Checkin, error) {
-
 	win32Bios, err := GetWin32Bios()
 	if err != nil {
 		return nil, errors.Wrap(err, "get win32Bios")

@@ -13,7 +13,7 @@ import (
 )
 
 func createRotateKeyCmd(conf *config.Config) *cobra.Command {
-	var rotateKeyCmd = &cobra.Command{
+	rotateKeyCmd := &cobra.Command{
 		Use:   "rotatekey",
 		Short: "create a new bitlocker key",
 		Long:  `create a new bitlocker key. if a key is already present, replace it`,
@@ -35,7 +35,7 @@ func createRotateKeyCmd(conf *config.Config) *cobra.Command {
 
 func createVersionCmd() *cobra.Command {
 	var fFull bool
-	var versionCmd = &cobra.Command{
+	versionCmd := &cobra.Command{
 		Use:   "version",
 		Short: "Print the version number of crypt-bde",
 		Long:  `Print the version number and build information of crypt-bde`,
@@ -55,7 +55,7 @@ func createVersionCmd() *cobra.Command {
 
 func createRootCmd(conf *config.Config) *cobra.Command {
 	// rootCmd represents the base command when called without any subcommands
-	var rootCmd = &cobra.Command{
+	rootCmd := &cobra.Command{
 		Use:   "crypt-bde",
 		Short: "crypt-bde manages bitlocker on windows",
 		Long: `crypt-bde manages local disk encryption, and escrows the secrets to crypt
@@ -99,7 +99,9 @@ func main() {
 	// create root command and load config.
 	conf := new(config.Config)
 	rootCmd := createRootCmd(conf)
-	rootCmd.ParseFlags(os.Args)
+	if err := rootCmd.ParseFlags(os.Args); err != nil {
+		fatal(err)
+	}
 	if err := loadConfig(rootCmd, conf); err != nil {
 		fatal(err)
 	}

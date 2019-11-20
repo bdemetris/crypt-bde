@@ -71,7 +71,9 @@ func (c *Client) Checkin(values url.Values) error {
 	defer resp.Body.Close()
 
 	// Copy the body to the console in case there is any response
-	io.Copy(os.Stdout, resp.Body)
+	if _, err := io.Copy(os.Stdout, resp.Body); err != nil {
+		return fmt.Errorf("failed to record to console: %s", err)
+	}
 	return nil
 }
 
