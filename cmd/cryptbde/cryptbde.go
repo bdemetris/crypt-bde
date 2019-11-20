@@ -99,7 +99,9 @@ func main() {
 	// create root command and load config.
 	conf := new(config.Config)
 	rootCmd := createRootCmd(conf)
-	rootCmd.ParseFlags(os.Args)
+	if err := rootCmd.ParseFlags(os.Args); err != nil {
+		fatal(err)
+	}
 	if err := loadConfig(rootCmd, conf); err != nil {
 		fatal(err)
 	}
