@@ -8,9 +8,9 @@ import (
 	"github.com/pkg/errors"
 )
 
-//CreateRecoveryPasswordProtector generates another key of type RecoveryPassword
-//Windows seems to allow infinite keys to exist, each time this runs it will create a new key
-//if the disk is encrypted already.  If the disk is not encrypted it will encrypt it.
+// CreateRecoveryPasswordProtector generates another key of type RecoveryPassword
+// Windows seems to allow infinite keys to exist, each time this runs it will create a new key
+// if the disk is encrypted already.  If the disk is not encrypted it will encrypt it.
 func CreateRecoveryPasswordProtector() (string, error) {
 	cmd := exec.Command("C:\\Windows\\System32\\manage-bde.exe", "-protectors", "-add", "-rp", "c:")
 
@@ -26,7 +26,7 @@ func CreateRecoveryPasswordProtector() (string, error) {
 	return id, nil
 }
 
-//CreateTpmProtector enables the TPM on a device
+// CreateTpmProtector enables the TPM on a device
 func CreateTpmProtector() error {
 	cmd := exec.Command("C:\\Windows\\System32\\manage-bde.exe", "-protectors", "-add", "-tpm", "c:")
 
@@ -38,9 +38,9 @@ func CreateTpmProtector() error {
 	return nil
 }
 
-//CreateProtectorsIfMissing is meant to handle an out of the box situation
+// CreateProtectorsIfMissing is meant to handle an out of the box situation
 func CreateProtectorsIfMissing() error {
-	//First see if there is a key to rotate, if not, create one
+	// First see if there is a key to rotate, if not, create one
 	key, err := GetActiveRecoveryPassword()
 	if err != nil {
 		return errors.Wrap(err, "create: cant get active recovery password")
@@ -54,7 +54,7 @@ func CreateProtectorsIfMissing() error {
 		}
 	}
 
-	//Get the status to see if we have a TPM or better
+	// Get the status to see if we have a TPM or better
 	status, err := GetEncryptionStatus()
 	if err != nil {
 		return errors.Wrap(err, "create: getting encryption status")

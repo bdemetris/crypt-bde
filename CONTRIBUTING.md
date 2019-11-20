@@ -12,11 +12,11 @@ Try checking out `#Crypt` on MacAdmins Slack.
 
 To build Crypt-BDE from source, you will need [Go 1.11](https://golang.org/dl/) or later installed.
 
-```
+```shell
 go get github.com/bdemetris/crypt-bde
 ```
 
-*or*
+_or_
 
 ```shell
 git clone git@github.com:bdemetris/crypt-bde.git && cd crypt-bde
@@ -25,7 +25,8 @@ make
 ```
 
 ## Git workflow
-```
+
+```shell
 username=$GitHubUsername
 # add your remote/upstream
 git remote add $username git@github.com:$username/crypt-bde.git
@@ -45,8 +46,7 @@ git push -u $username
 
 A few helpful resources for getting started with Go:
 
-* [Writing, building, installing, and testing Go code](https://www.youtube.com/watch?v=XCsL89YtqCs)
-* [Resources for new Go programmers](http://dave.cheney.net/resources-for-new-go-programmers)
-* [How I start](https://howistart.org/posts/go/1)
-* [How to write Go code](https://golang.org/doc/code.html)
-
+- [Writing, building, installing, and testing Go code](https://www.youtube.com/watch?v=XCsL89YtqCs)
+- [Resources for new Go programmers](http://dave.cheney.net/resources-for-new-go-programmers)
+- [How I start](https://howistart.org/posts/go/1)
+- [How to write Go code](https://golang.org/doc/code.html)

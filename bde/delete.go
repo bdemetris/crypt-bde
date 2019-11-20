@@ -6,7 +6,7 @@ import (
 	"github.com/pkg/errors"
 )
 
-//DeleteKeyProtector Removes the Protector ID Passed in as type Int
+// DeleteKeyProtector Removes the Protector ID Passed in as type Int
 func DeleteKeyProtector(id string) error {
 	cmd := exec.Command("powershell", "Remove-BitlockerKeyProtector", "-MountPoint", "$env:SystemDrive", "-KeyProtectorId", (`"` + id + `"`))
 
